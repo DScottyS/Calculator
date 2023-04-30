@@ -4,6 +4,8 @@
     {
         static void Main()
         {
+            Menu();
+            
             Calculator calc = new Calculator();
 
             Dictionary<string, dynamic> dispatch = new();
@@ -50,6 +52,24 @@
                 }
 
             }
+        }
+
+        public static void Menu()
+        {
+            Console.WriteLine("---------------------------------------------------------------------------");
+            Console.WriteLine("                Welcome to cool calculator so cool very wow                ");
+            Console.WriteLine("---------------------------------------------------------------------------\n");
+            Console.WriteLine("To Add type: add [number1] [number2]");
+            Console.WriteLine("To Subtract type: sub [number1] [number2]");
+            Console.WriteLine("To Multiply type: mult [number1] [number2]");
+            Console.WriteLine("To Divide type: div [number1] [number2]");
+            Console.WriteLine("To get Modulo type: mod [number1] [number2]");
+            Console.WriteLine("To get the Square type: sqr [number]");
+            Console.WriteLine("To get the Square Root type: sqrt [number]");
+            Console.WriteLine("To raise a number to a Power type: pow [number] [exponent]");
+            Console.WriteLine("To get the Factorial type: fact [number]\n");
+            Console.WriteLine("All functions can be used with the last number produced by the calulator by\nignoring the number that would be in [number1]");
+            Console.WriteLine("---------------------------------------------------------------------------\n");
         }
     }
 }
