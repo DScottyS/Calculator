@@ -1,0 +1,4 @@
+apple, 11
+gibblegobble, 332
+currentValue, 7
+ball, 7

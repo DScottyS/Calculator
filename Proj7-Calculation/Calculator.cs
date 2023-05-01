@@ -8,7 +8,7 @@ namespace Proj7_Calculation
 {
     public class Calculator
     {
-        Dictionary<string, double> CalcInput = new();
+        public Dictionary<string, double> CalcInput = new();
 
         public double GetValue()
         {
@@ -107,6 +107,44 @@ namespace Proj7_Calculation
             }
 
             CalcInput["currentValue"] = temp;
+        }
+
+        public void Set(string a)
+        {
+            double x = CalcInput[a];
+            CalcInput["currentValue"] = x;
+        }
+
+        public void Export()
+        {
+            DateTime dateTime = DateTime.Now;
+            StreamWriter sw = new StreamWriter($"..\\..\\..\\..\\CalcData\\SavedVariables{dateTime.ToString("m-s")}.txt");
+
+            foreach(KeyValuePair<string, double> StoredValue in CalcInput)
+            {
+                sw.WriteLine($"{StoredValue.Key}, {StoredValue.Value}");
+            }
+            sw.Close();
+        }
+
+        public void Import(string filePath)
+        {
+            try
+            {
+                StreamReader sr = new StreamReader($"..\\..\\..\\..\\CalcData\\{filePath}");
+
+                string line;
+                while((line = sr.ReadLine()) != null)
+                {
+                    string[] wholeLine = line.Split(',');
+                    CalcInput.Add(wholeLine[0], Parse(wholeLine[1]));
+                }
+                sr.Close();
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("The given filepath was invalid");
+            }           
         }
     }
 }
