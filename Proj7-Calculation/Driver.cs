@@ -1,12 +1,28 @@
-﻿namespace Proj7_Calculation
+﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                     //
+// Project: Calculator                                                                                 //
+// File Name: Driver                                                                                   //
+// Course: CSCI 2210 – Introduction to Computer Science II                                             //
+// Author: Scotty Snyder, snyderds@etsu.edu, Department of Computing, East Tennessee State University  //
+// Created: Monday, April 29, 2023                                                                     //
+// Copyright: Scotty Snyder, 2023                                                                      //
+//                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using Microsoft.CSharp.RuntimeBinder;
+
+namespace Proj7_Calculation
 {
     internal class Driver
     {
+        /// <summary>
+        /// main method runs the program
+        /// </summary>
         static void Main()
         {
             Menu();
             
-
+            //all the functions that can be used by the calculator
             Dictionary<string, dynamic> dispatch = new();
             dispatch["add"] = new Action<string, string>((a, b) => calc.Add(a, b));
             dispatch["store"] = new Action<string, string>((a, b) => calc.Store(a, b));
@@ -18,14 +34,13 @@
             dispatch["fact"] = new Action<string>((a) => calc.Fact(a));
             dispatch["sqr"] = new Action<string>((a) => calc.Sqr(a));
             dispatch["sqrt"] = new Action<string>((a) => calc.Sqrt(a));
-            dispatch["clear"] = new Action<string>((a) => calc.Clear(a));
             dispatch["set"] = new Action<string>((a) => calc.Set(a));
             dispatch["import"] = new Action<string>((a) => calc.Import(a));
+            dispatch["clear"] = new Action(() => calc.Clear());
             dispatch["export"] = new Action(() => calc.Export());
             dispatch["view"] = new Action(() => View());
 
-
-
+            //these statements ensure commands can be run properly
             while(true)
             {
                 try
@@ -54,7 +69,7 @@
                     }
                     else if(input.Length == 1)
                     {
-                        if(input[0] == "view" || input[0] == "export")
+                        if(input[0] == "view" || input[0] == "export" || input[0] == "clear")
                         {
                             dispatch[input[0]]();
                         }
@@ -68,12 +83,18 @@
                 {
                     Console.WriteLine("I'm sorry, that is not a valid command");
                 }
+                catch (RuntimeBinderException) 
+                {
+                    Console.WriteLine("An error has occured: you have put more variables into a function than that function allows for");
+                }
             }
         }
 
         public static Calculator calc = new Calculator();
 
-
+        /// <summary>
+        /// menu method shows the user all the options for what they can do with the program
+        /// </summary>
         public static void Menu()
         {
             Console.WriteLine("---------------------------------------------------------------------------");
@@ -100,6 +121,9 @@
             Console.WriteLine("---------------------------------------------------------------------------\n");
         }
 
+        /// <summary>
+        /// view method shows all of the Key Value Pairs stored in the calculator
+        /// </summary>
         public static void View()
         {
             Console.WriteLine();
